@@ -110,7 +110,7 @@ p {
     font-family: "Iceberg", sans-serif;
     font-size: 48px;
     font-style: italic;
-    letter-spacing: 5%;
+    letter-spacing: 2px;
 }
 
 .dots span.unclear, .dots span.clear {
