@@ -6,22 +6,34 @@ const multiply = (a, b) => a * b;
 
 const divide = (a, b) => a / b;
 
-function operate(string) {
-    string = string.replaceAll(' ', '');
-    console.log(string);
-    let [num1, operator, num2] = string.split('');
+const percent = (a, b) => a * (b / 100);
+
+function operate() {
+    addNumberToExpression();
+
+    let [num1, operator, num2] = expression.split(' ');
     num1 = +num1;
     num2 = +num2;
     switch (operator) {
         case '+':
-            return add(num1, num2);
+            currentNumber = add(num1, num2);
+            break;
         case '-':
-            return subtract(num1, num2);
+            currentNumber = subtract(num1, num2);
+            break;
         case '×':
-            return multiply(num1, num2);
+            currentNumber = multiply(num1, num2);
+            break;
         case '÷':
-            return divide(num1, num2);
+            currentNumber = divide(num1, num2);
+            break;
+        case '%':
+            currentNumber = percent(num1, num2);
+            break;
     }
+    currentNumber = currentNumber.toString();
+    expression = `${currentNumber} ${operator} `;
+    updateScreen();
 }
 
 const unclearNumbers = document.querySelector('.calc-screen .unclear');
@@ -39,6 +51,12 @@ function initializeScreen() {
         number.addEventListener('click', addDigit);
     }
 
+    const operators = document.querySelectorAll('.operator');
+    console.log(operators)
+    for (let operator of operators) {
+        operator.addEventListener('click', addOperator);
+    }
+
     const dots = document.querySelector('.dots');
     for (let i = 0; i < TOTAL_DIGITS; i++) {
         let childDot = document.createElement('span');
@@ -54,8 +72,12 @@ btnBackspace.addEventListener('click', removeDigit);
 const btnClear = document.querySelector('.clear-result');
 btnClear.addEventListener('click', clearResult);
 
+const btnEquals = document.querySelector('.equal');
+btnEquals.addEventListener('click', operate);
+
 function clearResult() {
     currentNumber = '';
+    expression = '';
     updateScreen();
 }
 
@@ -64,6 +86,22 @@ function removeDigit() {
         currentNumber = currentNumber.slice(0, -1);
         updateScreen();
     }
+}
+
+function addNumberToExpression() {
+    if (currentNumber.slice(-1) === '.') {
+        expression += currentNumber.slice(0, -1);
+    }
+    else {
+        expression += currentNumber;
+    }
+}
+
+function addOperator(evt) {
+    addNumberToExpression();
+    expression += ` ${evt.target.textContent} `;
+    currentNumber = '';
+    updateScreen();
 }
 
 function addDigit(evt) {
