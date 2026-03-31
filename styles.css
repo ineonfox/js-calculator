@@ -36,7 +36,7 @@ button:hover {
 }
 
 .red:hover {
-    background-color: hsl(343, 47%, 80%);
+    background-color: hsl(1, 52%, 80%);
 }
 
 button:disabled {
@@ -121,8 +121,8 @@ p {
 }
 
 .red {
-    background-color: #D78FA3;
-    box-shadow: 3px 3px hsl(343, 47%, 30%);
+    background-color: #D98A88;
+    box-shadow: 3px 3px hsl(1, 52%, 20%);
 }
 
 .btn-row {
